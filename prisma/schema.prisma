@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model cliente {
+  idCliente         Int                 @id @default(autoincrement())
+  nomeCliente       String?             @db.VarChar(100)
+  emailCliente      String?             @db.VarChar(100)
+  rgCliente         String?             @db.VarChar(15)
+  orgaoEmissor      String?             @db.VarChar(20)
+  cpfCliente        String?             @db.VarChar(20)
+  telefoneCliente   String?             @db.VarChar(20)
+  dataNascimento    DateTime?           @db.Date
+  idadeCliente      Int?
+  referencia        String?             @db.VarChar(100)
+  pessoaContato     String?             @db.VarChar(100)
+  telefoneContato   String?             @db.VarChar(20)
+  cpfConsultado     String?             @db.VarChar(10)
+  dataCpfConsultado DateTime?           @db.Date
+  redeSocial        String?             @db.VarChar(200)
+  created           DateTime?           @db.Date
+  modified          DateTime?           @db.DateTime(0)
+  statusCliente     Boolean?            @default(true)
+  enderecoCliente   String?             @db.VarChar(200)
+  nacionalidade     String?             @db.VarChar(70)
+  profissao         String?             @db.VarChar(70)
+  estadoCivil       String?             @db.VarChar(70)
+  clienteRedeSocial Boolean             @default(false)
+  poltrona          String?             @db.VarChar(100)
+  statusCpf         String?             @default("Não verificado") @db.VarChar(50)
+  pagamento_passeio pagamento_passeio[]
+}
+
+model despesa {
+  idDespesa                       Int      @id @default(autoincrement())
+  idPasseio                       Int
+  valorIngresso                   Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorOnibus                     Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorMicro                      Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorVan                        Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorEscuna                     Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorAlmocoCliente              Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorAlmocoMotorista            Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorEstacionamento             Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorGuia                       Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorAutorizacaoTransporte      Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorTaxi                       Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorKitLanche                  Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorMarketing                  Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorImpulsionamento            Decimal? @default(0.00) @db.Decimal(9, 2)
+  valorPulseira                   Decimal  @default(0.00) @db.Decimal(9, 2)
+  valorHospedagem                 Decimal  @default(0.00) @db.Decimal(9, 2)
+  valorAereo                      Decimal  @default(0.00) @db.Decimal(9, 2)
+  valorServicos                   Decimal  @default(0.00) @db.Decimal(9, 2)
+  valorSeguroViagem               Decimal  @default(0.00) @db.Decimal(9, 2)
+  outros                          Decimal? @default(0.00) @db.Decimal(9, 2)
+  quantidadeIngresso              Int?     @default(1)
+  quantidadeOnibus                Int?     @default(1)
+  quantidadeMicro                 Int?     @default(1)
+  quantidadeEscuna                Int?     @default(1)
+  quantidadeAlmocoCliente         Int?     @default(1)
+  quantidadeAlmocoMotorista       Int?     @default(1)
+  quantidadeEstacionamento        Int?     @default(1)
+  quantidadeGuia                  Int?     @default(1)
+  quantidadeAutorizacaoTransporte Int?     @default(1)
+  quantidadeTaxi                  Int?     @default(1)
+  quantidadeMarketing             Int?     @default(1)
+  quantidadeKitLanche             Int?     @default(1)
+  quantidadeImpulsionamento       Int?     @default(1)
+  quantidadePulseira              Int      @default(1)
+  quantidadeHospedagem            Int      @default(1)
+  quantidadeAereo                 Int      @default(1)
+  quantidadeServicos              Int      @default(1)
+  quantidadeVan                   Int?     @default(1)
+  quantidadeSeguroViagem          Int      @default(1)
+  totalDespesas                   Decimal  @db.Decimal(9, 2)
+  passeio                         passeio  @relation(fields: [idPasseio], references: [idPasseio], onDelete: NoAction, onUpdate: NoAction, map: "despesa_ibfk_1")
+
+  @@index([idPasseio], map: "idPasseio")
+}
+
+model log {
+  idLog           Int       @id @default(autoincrement())
+  idUser          Int
+  nomecliente     String?   @db.VarChar(100)
+  nomePasseio     String?   @db.VarChar(100)
+  dataPasseio     DateTime? @db.Date
+  valorPago       Decimal?  @db.Decimal(9, 2)
+  dataLog         DateTime  @default(now()) @db.Timestamp(0)
+  tipoModificacao String    @db.VarChar(50)
+  users           users     @relation(fields: [idUser], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "log_ibfk_1")
+
+  @@index([idUser], map: "idUser")
+}
+
+model pagamento_passeio {
+  idPagamento              Int       @id @default(autoincrement())
+  idCliente                Int
+  idPasseio                Int
+  createdBy                Int       @default(3)
+  valorPago                Decimal?  @default(0.00) @db.Decimal(9, 2)
+  valorVendido             Decimal?  @default(0.00) @db.Decimal(9, 2)
+  previsaoPagamento        DateTime? @default(now())
+  valorPendente            Decimal?  @default(0.00) @db.Decimal(9, 2)
+  statusPagamento          Boolean
+  seguroViagem             Boolean?
+  clienteParceiro          Boolean   @default(false)
+  transporte               String?   @db.VarChar(50)
+  anotacoes                String?   @db.VarChar(500)
+  historicoPagamento       String?   @db.VarChar(500)
+  valorSeguroViagemCliente Decimal?  @default(0.00) @db.Decimal(9, 2)
+  taxaPagamento            Decimal?  @default(0.00) @db.Decimal(9, 2)
+  localEmbarque            String?   @db.VarChar(100)
+  dataPagamento            DateTime? @db.DateTime(0)
+  clienteDesistente        Boolean   @default(false)
+  ordemPoltrona            Int?
+  lastModified             DateTime  @default(now()) @db.Timestamp(0)
+  createdAt                DateTime  @default(now()) @db.Timestamp(0)
+  valorContrato            Float     @db.Float
+  numeroVagas              Int
+  opcionais                String    @db.Text
+  dataPagamentoEfetuado    DateTime? @db.Timestamp(0)
+  users                    users     @relation(fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "createdBy")
+  cliente                  cliente   @relation(fields: [idCliente], references: [idCliente], onDelete: NoAction, onUpdate: NoAction, map: "pagamento_passeio_ibfk_1")
+  passeio                  passeio   @relation(fields: [idPasseio], references: [idPasseio], onDelete: NoAction, onUpdate: NoAction, map: "pagamento_passeio_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([idCliente], map: "idCliente")
+  @@index([idPasseio], map: "idPasseio")
+}
+
+model passeio {
+  idPasseio         Int                 @id @default(autoincrement())
+  nomePasseio       String?             @db.VarChar(100)
+  localPasseio      String?             @db.VarChar(50)
+  valorPasseio      Decimal?            @default(0.00) @db.Decimal(9, 2)
+  dataPasseio       DateTime?           @db.Date
+  lotacao           Int?                @default(0)
+  anotacoes         String?             @db.VarChar(200)
+  idadeIsencao      Int
+  statusPasseio     Boolean?            @default(true)
+  dataLancamento    DateTime            @default(now()) @db.Timestamp(0)
+  itensPacote       String              @db.Text
+  prazoVigencia     DateTime            @db.Date
+  despesa           despesa[]
+  pagamento_passeio pagamento_passeio[]
+}
+
+model users {
+  id                Int                 @id @default(autoincrement())
+  username          String              @unique(map: "username") @db.VarChar(50)
+  password          String              @db.VarChar(255)
+  nivelAcesso       Int                 @default(2)
+  created_at        DateTime?           @default(now()) @db.DateTime(0)
+  log               log[]
+  pagamento_passeio pagamento_passeio[]
+}
