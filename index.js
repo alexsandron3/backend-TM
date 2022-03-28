@@ -8,4 +8,5 @@ app.use(express.json());
 app.use(cors());
 app.use(error);
 app.use('/events', routes.events);
+app.use('/customers', routes.customers);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
