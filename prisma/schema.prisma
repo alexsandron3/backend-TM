@@ -108,7 +108,7 @@ model pagamento_passeio {
   valorVendido             Decimal?  @default(0.00) @db.Decimal(9, 2)
   previsaoPagamento        DateTime? @default(now())
   valorPendente            Decimal?  @default(0.00) @db.Decimal(9, 2)
-  statusPagamento          Boolean
+  statusPagamento          Int
   seguroViagem             Boolean?
   clienteParceiro          Boolean   @default(false)
   transporte               String?   @db.VarChar(50)

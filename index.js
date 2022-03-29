@@ -9,4 +9,5 @@ app.use(cors());
 app.use(error);
 app.use('/events', routes.events);
 app.use('/customers', routes.customers);
+app.use('/payments', routes.payments);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
