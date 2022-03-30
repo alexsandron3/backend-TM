@@ -1,7 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 
 const { customer } = require('../../models/');
-// const a = require('../../models')
 
 async function listAll(req, res) {
   const { ocultarInativos } = req.query;
