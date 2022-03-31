@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { customers } = require('../controllers');
+const validateCustomer = require('../middlewares/validateCustomer');
 
 // Listar todos clientes
 router.get('/', customers.listAll);
@@ -12,7 +13,7 @@ router.get('/:wordToSearch', customers.listByText);
 router.get('/id/:id', customers.listById);
 
 // Criar cliente
-router.post('/', customers.create);
+router.post('/', validateCustomer, customers.create);
 
 // Exportar rotas
 module.exports = router;
