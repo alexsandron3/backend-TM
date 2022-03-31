@@ -26,7 +26,7 @@ async function login(req, res, next) {
             id: users.id,
             username: users.username,
             nivelAcesso: users.nivelAcesso,
-            createdAt: users.createdAt,
+            createdAt: users.created_at,
           },
         },
         SECRET,
