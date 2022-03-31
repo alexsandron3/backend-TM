@@ -76,9 +76,33 @@ async function listAll(req, res, next) {
     next(error);
   }
 }
+
+async function create(req, res, next) {
+  const { username, password, nivelAcesso } = req.body;
+  try {
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(password, salt, async function (err, hash) {
+        const newUser = {
+          username,
+          password: hash,
+          nivelAcesso,
+        };
+        const users = await user.create(newUser);
+        return res.status(StatusCodes.OK).json({
+          users,
+          success: 1,
+          message: 'Usuário criado com sucesso!',
+        });
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   login,
   listById,
   listByUsername,
   listAll,
+  create
 };

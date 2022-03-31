@@ -15,4 +15,6 @@ router.get('/', users.listAll);
 // Login
 router.post('/login', users.login);
 
+// Novo usuario
+router.post('/', users.create);
 module.exports = router;
