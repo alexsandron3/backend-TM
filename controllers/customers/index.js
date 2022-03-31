@@ -2,6 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 
 const { customer } = require('../../models/');
 
+const moment = require('moment');
+
 async function listAll(req, res, next) {
   const { ocultarInativos } = req.query;
   try {
@@ -75,7 +77,7 @@ async function create(req, res, next) {
       orgaoEmissor,
       cpfCliente,
       telefoneCliente,
-      dataNascimento,
+      dataNascimento: moment(dataNascimento, 'DD/MM/YYYY').toISOString(),
       idadeCliente,
       referencia,
       pessoaContato,

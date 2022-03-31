@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
-      Message: 'Token não encontrado!',
+      message: 'Token não encontrado!',
       success: 0,
     });
   }
@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
     });
     if (!user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
-        Message: 'Usuário não encontrado!',
+        message: 'Usuário não encontrado!',
         success: 0,
       });
     }

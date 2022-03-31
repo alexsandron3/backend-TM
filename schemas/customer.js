@@ -4,7 +4,7 @@ const customerSchema = Joi.object({
   nomeCliente: Joi.string().required(),
   emailCliente: [Joi.string().email().optional(), Joi.allow(null)],
   rgCliente: [Joi.string().optional(), Joi.allow(null)],
-  cpfCliente: [Joi.string().optional().min(12).max(12), Joi.allow(null)],
+  cpfCliente: [Joi.string().optional().min(14).max(14), Joi.allow(null)],
   telefoneCliente: [Joi.string().optional().min(10).max(11), Joi.allow(null)],
   dataNascimento: [Joi.string().optional().min(10).max(10), Joi.allow(null)],
   idadeCliente: [Joi.number().min(1).max(100).optional(), Joi.allow(null)],
