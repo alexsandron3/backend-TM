@@ -21,7 +21,7 @@ model cliente {
   referencia        String?             @db.VarChar(100)
   pessoaContato     String?             @db.VarChar(100)
   telefoneContato   String?             @db.VarChar(20)
-  cpfConsultado     String?             @db.VarChar(10)
+  cpfConsultado     Boolean?            @default(false)
   dataCpfConsultado DateTime?           @db.Date
   redeSocial        String?             @db.VarChar(200)
   created           DateTime?           @db.Date
@@ -106,9 +106,9 @@ model pagamento_passeio {
   createdBy                Int       @default(3)
   valorPago                Decimal?  @default(0.00) @db.Decimal(9, 2)
   valorVendido             Decimal?  @default(0.00) @db.Decimal(9, 2)
-  previsaoPagamento        DateTime? @default(now())
+  previsaoPagamento        DateTime? @db.Date
   valorPendente            Decimal?  @default(0.00) @db.Decimal(9, 2)
-  statusPagamento          Int
+  statusPagamento          Boolean
   seguroViagem             Boolean?
   clienteParceiro          Boolean   @default(false)
   transporte               String?   @db.VarChar(50)
@@ -145,7 +145,7 @@ model passeio {
   anotacoes         String?             @db.VarChar(200)
   idadeIsencao      Int
   statusPasseio     Boolean?            @default(true)
-  dataLancamento    DateTime            @default(now()) @db.Timestamp(0)
+  dataLancamento    DateTime            @db.Date
   itensPacote       String              @db.Text
   prazoVigencia     DateTime            @db.Date
   despesa           despesa[]
