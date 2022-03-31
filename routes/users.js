@@ -1,5 +1,7 @@
 const express = require('express');
 const { users } = require('../controllers');
+const validateLogin = require('../middlewares/validateLogin');
+const validateNewUser = require('../middlewares/validateNewUser');
 
 const router = express.Router();
 
@@ -13,8 +15,8 @@ router.get('/username/:username', users.listByUsername);
 router.get('/', users.listAll);
 
 // Login
-router.post('/login', users.login);
+router.post('/login', validateLogin, users.login);
 
 // Novo usuario
-router.post('/', users.create);
+router.post('/', validateNewUser, users.create);
 module.exports = router;

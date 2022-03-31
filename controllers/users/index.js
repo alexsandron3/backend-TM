@@ -2,19 +2,16 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { StatusCodes } = require('http-status-codes');
 const { user } = require('../../models');
+const SECRET = process.env.SECRET;
+
 async function login(req, res, next) {
   try {
     const { username, password, rememberMe } = req.body;
-    if (!username || !password) {
-      return res
-        .status(StatusCodes.OK)
-        .json({ message: 'É necessário usuário e senha para fazer login' });
-    }
     const users = await user.findUserByUsername(username);
-    if (!user)
+    if (!users)
       return res.status(StatusCodes.OK).json({ message: 'Usuário não existe' });
 
-    bcrypt.compare(password, user.password, function (err, result) {
+    bcrypt.compare(password, users.password, function (err, result) {
       if (!result) {
         return res.status(StatusCodes.OK).json({ message: 'Senha inválida' });
       }
@@ -22,9 +19,19 @@ async function login(req, res, next) {
         expiresIn: rememberMe ? '7D' : '1D',
         algorithm: 'HS256',
       };
-      users.password = ' ';
-      users._previousDataValues.password = ' ';
-      const token = jwt.sign({ data: users }, SECRET, jwtConfig);
+
+      const token = jwt.sign(
+        {
+          data: {
+            id: users.id,
+            username: users.username,
+            nivelAcesso: users.nivelAcesso,
+            createdAt: users.createdAt,
+          },
+        },
+        SECRET,
+        jwtConfig,
+      );
       return res
         .status(StatusCodes.OK)
         .json({ message: 'Login realizado com sucesso', token });
@@ -104,5 +111,5 @@ module.exports = {
   listById,
   listByUsername,
   listAll,
-  create
+  create,
 };
