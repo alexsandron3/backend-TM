@@ -34,7 +34,7 @@ async function login(req, res, next) {
       );
       return res
         .status(StatusCodes.OK)
-        .json({ message: 'Login realizado com sucesso', token });
+        .json({ message: 'Login realizado com sucesso', token, success: 1 });
     });
   } catch (err) {
     return res
