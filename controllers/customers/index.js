@@ -20,8 +20,9 @@ async function listAll(req, res, next) {
 
 async function listByText(req, res, next) {
   const { wordToSearch } = req.params;
+  const { ocultarInativos } = req.query;
   try {
-    const customers = await customer.listByText(wordToSearch);
+    const customers = await customer.listByText(wordToSearch, ocultarInativos);
     return res.status(StatusCodes.OK).json({
       customers,
       success: 1,
