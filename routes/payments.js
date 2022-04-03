@@ -2,12 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { payments } = require('../controllers');
 
-// Listar todos pagamentos
-router.get('/', payments.listAll);
-
-//Listar um pagamento pelo id do pagamento
-router.get('/:id', payments.listById);
-
 // Listar um pagamento pelo id do cliente e id do passeio
 router.get(
   '/cliente/:idCliente/passeio/:idPasseio',
@@ -18,6 +12,12 @@ router.get(
 router.get('/data/:dataInicial/:dataFinal', payments.listByEventStartEndDate);
 
 // Listar varios pagamentos baseado no id e datas inicial e final do passeio
-router.get('/passeio/:idPasseio', payments.listByEventId);
+router.get('/events/', payments.listByEventStartEndDate);
+
+//Listar um pagamento pelo id do pagamento
+router.get('/id/:id', payments.listById);
+
+// Listar todos pagamentos
+router.get('/', payments.listAll);
 
 module.exports = router;

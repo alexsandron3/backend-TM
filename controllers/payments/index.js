@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 
 const { payment } = require('../../models/');
+const countPaymentStatus = require('../../utils/countPaymentStatus');
 
 async function listAll(req, res) {
   const { ocultarEncerrados } = req.query;
@@ -36,13 +37,23 @@ async function listByCustomerIdAndEventId(req, res) {
 }
 
 async function listByEventStartEndDate(req, res) {
-  const { dataInicial, dataFinal } = req.params;
-  const payments = await payment.listByEventStartEndDate(
+  const { dataInicial, dataFinal } = req.query;
+  const { ocultarEncerrados } = req.query;
+  const eventsWithPayments = await payment.listByEventStartEndDate(
     dataInicial,
     dataFinal,
+    ocultarEncerrados,
   );
+
+  const paymentsWithEventsAndStatus = eventsWithPayments.map((event) => {
+    const paymentsTotalStatus = countPaymentStatus(event.pagamento_passeio);
+    return {
+      ...event,
+      paymentsTotalStatus,
+    };
+  });
   return res.status(StatusCodes.OK).json({
-    payments,
+    payments: paymentsWithEventsAndStatus,
     success: 1,
     message: 'Pesquisa realizada com sucesso!',
   });
