@@ -4,7 +4,10 @@ const prisma = new PrismaClient();
 module.exports = async (ocultarEncerrados) => {
   const events = await prisma.passeio.findMany({
     where: {
-      statusPasseio: ocultarEncerrados === 'true',
+      OR: [
+        { statusPasseio: true },
+        ocultarEncerrados === 'false' ? { statusPasseio: false } : null,
+      ],
     },
   });
   return events;

@@ -11,7 +11,10 @@ module.exports = async (wordToSearch, ocultarEncerrados) => {
       localPasseio: {
         contains: wordToSearch,
       },
-      statusPasseio: ocultarEncerrados === 'true',
+      OR: [
+        { statusPasseio: true },
+        ocultarEncerrados === 'false' ? { statusPasseio: false } : null,
+      ],
     },
   });
   return events;

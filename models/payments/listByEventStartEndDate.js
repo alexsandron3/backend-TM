@@ -1,14 +1,20 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const moment = require('moment');
 
-module.exports = async (startDate, endDate) => {
-  const payments = await prisma.pagamento_passeio.findMany({
+module.exports = async (startDate, endDate, ocultarEncerrados) => {
+  const payments = await prisma.passeio.findMany({
     where: {
-      dataPagamento: {
-        gte: moment(startDate).toISOString(),
-        lte: moment(endDate).toISOString(),
+      dataPasseio: {
+        gte: new Date(startDate).toISOString(),
+        lte: new Date(endDate).toISOString(),
       },
+      OR: [
+        { statusPasseio: true },
+        ocultarEncerrados === 'false' ? { statusPasseio: false } : null,
+      ],
+    },
+    include: {
+      pagamento_passeio: true,
     },
   });
   return payments;
