@@ -1,10 +1,10 @@
-const { PrismaClient } = require('@prisma/client');
+const prisma = require('../../utils/prismaClient');
+
 const {
   CLIENTE_PARCEIRO,
   PAGAMENTO_QUITADO,
   CLIENTE_CRIANÇA,
 } = require('../../utils/constants');
-const prisma = new PrismaClient();
 
 module.exports = async () => {
   const allPayments = await prisma.pagamento_passeio.findMany({

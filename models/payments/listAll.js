@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../../utils/prismaClient');
+
 module.exports = async (ocultarEncerrados) => {
   const payments = await prisma.pagamento_passeio.findMany({
     where: {
