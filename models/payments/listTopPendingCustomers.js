@@ -17,22 +17,6 @@ module.exports = async () => {
       cliente: true,
     },
   });
-  // console.log(allPayments);
 
-  // Contar quantidade de pagamentos pendentes por cliente
-  const paymentsByClient = allPayments.reduce((acc, pagamento) => {
-    const { cliente } = pagamento;
-    if (acc[cliente.nomeCliente]) {
-      acc[cliente.nomeCliente] += 1;
-    } else {
-      acc[cliente.nomeCliente] = 1;
-    }
-    return acc;
-  }, {});
-  // Ordernar do maior para o menor
-  const sortedPaymentsByClient = Object.entries(paymentsByClient).sort(
-    (a, b) => b[1] - a[1],
-  );
-
-  return Object.fromEntries(sortedPaymentsByClient);
+  return allPayments;
 };
