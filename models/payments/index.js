@@ -6,6 +6,7 @@ const listByEventId = require('./listByEventId');
 const listPendingPayments = require('./listPendingPayments');
 const listTopPendingCustomers = require('./listTopPendingCustomers');
 const listTopPendingEvents = require('./listTopPendingEvents');
+const listTopCustomers = require('./listTopCustomers');
 module.exports = {
   listAll,
   listById,
@@ -15,4 +16,5 @@ module.exports = {
   listPendingPayments,
   listTopPendingCustomers,
   listTopPendingEvents,
+  listTopCustomers,
 };

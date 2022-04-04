@@ -69,8 +69,29 @@ async function listTopPendingEvents(req, res) {
   });
 }
 
+async function listTopCustomers(req, res) {
+  const allPayments = await payment.listTopCustomers();
+  const paymentsByClient = allPayments.reduce((acc, pagamento) => {
+    const { cliente } = pagamento;
+    if (acc[cliente.nomeCliente]) {
+      acc[cliente.nomeCliente] += 1;
+    } else {
+      acc[cliente.nomeCliente] = 1;
+    }
+    return acc;
+  }, {});
+  const sortedPaymentsByClient = Object.entries(paymentsByClient).sort(
+    (a, b) => b[1] - a[1],
+  );
+  return res.status(StatusCodes.OK).json({
+    payments: Object.fromEntries(sortedPaymentsByClient),
+    success: 1,
+    message: 'Pesquisa realizada com sucesso!',
+  });
+}
 module.exports = {
   listPendingPayments,
   listTopPendingCustomers,
   listTopPendingEvents,
+  listTopCustomers,
 };

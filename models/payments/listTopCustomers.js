@@ -1,7 +1,6 @@
 const {
   CLIENTE_PARCEIRO,
-  PAGAMENTO_QUITADO,
-  CLIENTE_CRIANÇA,
+  CLIENTE_INTERESSADO,
 } = require('../../utils/constants');
 const prisma = require('../../utils/prismaClient');
 
@@ -9,11 +8,15 @@ module.exports = async () => {
   const allPayments = await prisma.pagamento_passeio.findMany({
     where: {
       statusPagamento: {
-        notIn: [CLIENTE_PARCEIRO, PAGAMENTO_QUITADO, CLIENTE_CRIANÇA],
+        notIn: [CLIENTE_PARCEIRO, CLIENTE_INTERESSADO],
       },
     },
     include: {
-      passeio: true,
+      cliente: {
+        select: {
+          nomeCliente: true,
+        },
+      },
     },
   });
 
