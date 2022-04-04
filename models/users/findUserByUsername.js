@@ -1,6 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-
+const prisma = require('../../utils/prismaClient');
 module.exports = async (username) => {
   return await prisma.users.findFirst({ where: { username } });
 };
