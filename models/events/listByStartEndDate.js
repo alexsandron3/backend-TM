@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../../utils/prismaClient');
+
 // Listar eventos por data de inicio e fim
 module.exports = async (startDate, endDate) => {
   const events = await prisma.passeio.findMany({
