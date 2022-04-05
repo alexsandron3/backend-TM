@@ -14,6 +14,9 @@ router.get('/data/:dataInicial/:dataFinal', payments.listByEventStartEndDate);
 // Listar varios pagamentos baseado no id e datas inicial e final do passeio
 router.get('/events/', payments.listByEventStartEndDate);
 
+// Listar varios pagamentos baseado no id e datas inicial e final do passeio
+router.get('/start-end-date', payments.listPaymentsByDate);
+
 //Listar um pagamento pelo id do pagamento
 router.get('/id/:id', payments.listById);
 

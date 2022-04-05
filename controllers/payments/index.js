@@ -69,10 +69,20 @@ async function listByEventId(req, res) {
   });
 }
 
+async function listPaymentsByDate(req, res) {
+  const { startDate, endDate } = req.query;
+  const allPayments = await payment.listPaymentsByDate(startDate, endDate);
+  return res.status(StatusCodes.OK).json({
+    payments: allPayments,
+    success: 1,
+    message: 'Pesquisa realizada com sucesso!',
+  });
+}
 module.exports = {
   listAll,
   listById,
   listByCustomerIdAndEventId,
   listByEventStartEndDate,
   listByEventId,
+  listPaymentsByDate,
 };
