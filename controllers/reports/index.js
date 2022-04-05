@@ -89,9 +89,19 @@ async function listTopCustomers(req, res) {
     message: 'Pesquisa realizada com sucesso!',
   });
 }
+
+async function listPaymentsNotPending(req, res) {
+  const allPayments = await payment.listPaymentsNotPending();
+  return res.status(StatusCodes.OK).json({
+    payments: allPayments,
+    success: 1,
+    message: 'Pesquisa realizada com sucesso!',
+  });
+}
 module.exports = {
   listPendingPayments,
   listTopPendingCustomers,
   listTopPendingEvents,
   listTopCustomers,
+  listPaymentsNotPending,
 };
