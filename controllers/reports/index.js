@@ -15,7 +15,7 @@ async function listPendingPayments(req, res) {
 
 async function listTopPendingCustomers(req, res) {
   const allPayments = await payment.listTopPendingCustomers();
-  const paymentsByClient = allPayments.reduce((acc, pagamento) => {
+  const paymentsByUsers = allPayments.reduce((acc, pagamento) => {
     const { cliente } = pagamento;
     if (acc[cliente.nomeCliente]) {
       acc[cliente.nomeCliente] += 1;
@@ -24,11 +24,11 @@ async function listTopPendingCustomers(req, res) {
     }
     return acc;
   }, {});
-  const sortedPaymentsByClient = Object.entries(paymentsByClient).sort(
+  const sortedPaymentsByUsers = Object.entries(paymentsByUsers).sort(
     (a, b) => b[1] - a[1],
   );
   return res.status(StatusCodes.OK).json({
-    payments: Object.fromEntries(sortedPaymentsByClient),
+    payments: Object.fromEntries(sortedPaymentsByUsers),
     success: 1,
     message: 'Pesquisa realizada com sucesso!',
   });
@@ -71,7 +71,7 @@ async function listTopPendingEvents(req, res) {
 
 async function listTopCustomers(req, res) {
   const allPayments = await payment.listTopCustomers();
-  const paymentsByClient = allPayments.reduce((acc, pagamento) => {
+  const paymentsByUsers = allPayments.reduce((acc, pagamento) => {
     const { cliente } = pagamento;
     if (acc[cliente.nomeCliente]) {
       acc[cliente.nomeCliente] += 1;
@@ -80,11 +80,11 @@ async function listTopCustomers(req, res) {
     }
     return acc;
   }, {});
-  const sortedPaymentsByClient = Object.entries(paymentsByClient).sort(
+  const sortedPaymentsByUsers = Object.entries(paymentsByUsers).sort(
     (a, b) => b[1] - a[1],
   );
   return res.status(StatusCodes.OK).json({
-    payments: Object.fromEntries(sortedPaymentsByClient),
+    payments: Object.fromEntries(sortedPaymentsByUsers),
     success: 1,
     message: 'Pesquisa realizada com sucesso!',
   });
@@ -108,11 +108,34 @@ async function listPaymentsByDate(req, res) {
     message: 'Pesquisa realizada com sucesso!',
   });
 }
+
+async function listTopSellersByDate(req, res) {
+  const { startDate, endDate } = req.query;
+  const allPayments = await payment.listTopSellersByDate(startDate, endDate);
+  const paymentsByUsers = allPayments.reduce((acc, pagamento) => {
+    const { users } = pagamento;
+    if (acc[users.username]) {
+      acc[users.username] += 1;
+    } else {
+      acc[users.username] = 1;
+    }
+    return acc;
+  }, {});
+  const sortedPaymentsByUsers = Object.entries(paymentsByUsers).sort(
+    (a, b) => b[1] - a[1],
+  );
+  return res.status(StatusCodes.OK).json({
+    payments: Object.fromEntries(sortedPaymentsByUsers),
+    success: 1,
+    message: 'Pesquisa realizada com sucesso!',
+  });
+}
 module.exports = {
   listPendingPayments,
   listTopPendingCustomers,
   listTopPendingEvents,
   listTopCustomers,
   listPaymentsNotPending,
-  listPaymentsByDate
+  listPaymentsByDate,
+  listTopSellersByDate,
 };
