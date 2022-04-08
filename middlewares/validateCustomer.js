@@ -1,6 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
 const customerSchema = require('../schemas/customer');
-const prisma = new PrismaClient();
+const prisma = require('../utils/prismaClient');
 
 module.exports = async (req, res, next) => {
   const { nomeCliente, cpfCliente } = req.body;

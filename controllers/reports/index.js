@@ -130,6 +130,20 @@ async function listTopSellersByDate(req, res) {
     message: 'Pesquisa realizada com sucesso!',
   });
 }
+
+async function listPaymentsGroupedByEventAndDate(req, res) {
+  const { startDate, endDate } = req.query;
+  const allPayments = await payment.listPaymentsGroupedByEventAndDate(
+    startDate,
+    endDate,
+  );
+  return res.status(StatusCodes.OK).json({
+    payments: allPayments,
+    success: 1,
+    message: 'Pesquisa realizada com sucesso!',
+  });
+}
+
 module.exports = {
   listPendingPayments,
   listTopPendingCustomers,
@@ -138,4 +152,5 @@ module.exports = {
   listPaymentsNotPending,
   listPaymentsByDate,
   listTopSellersByDate,
+  listPaymentsGroupedByEventAndDate,
 };

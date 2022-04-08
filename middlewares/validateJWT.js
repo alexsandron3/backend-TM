@@ -2,10 +2,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { StatusCodes } = require('http-status-codes');
 
-const { PrismaClient } = require('@prisma/client');
+const prisma = require('../utils/prismaClient');
 
 async function login(req, res, next) {
-  const prisma = new PrismaClient();
   const token = req.headers.authorization;
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({

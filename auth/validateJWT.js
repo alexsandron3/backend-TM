@@ -1,11 +1,11 @@
-const { PrismaClient } = require('@prisma/client');
+
 const { StatusCodes } = require('http-status-codes');
 
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env.JWT_SECRET;
+const prisma = require('../utils/prismaClient');
 
 module.exports = async (req, res, next) => {
-  const prisma = new PrismaClient();
   const token = req.headers.authorization;
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({

@@ -1,6 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
 const userSchema = require('../schemas/user');
-const prisma = new PrismaClient();
+const prisma = require('../utils/prismaClient');
 
 module.exports = async (req, res, next) => {
   const { username } = req.body;
