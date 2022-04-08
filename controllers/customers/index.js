@@ -105,14 +105,21 @@ async function create(req, res, next) {
   }
 }
 
-async function deactivate(req, res, next) {
+async function changeStatus(req, res, next) {
   const { id } = req.params;
+  const { status } = req.query;
   try {
-    const customers = await customer.deactivate(id);
+    const customers = await customer.changeStatus(
+      Number(id),
+      JSON.parse(status),
+    );
+    console.log(status);
+    const message = JSON.parse(status)
+      ? 'Cliente ativado com sucesso!'
+      : 'Cliente desativado com sucesso!';
     return res.status(StatusCodes.OK).json({
-      customers,
       success: 1,
-      message: 'Cliente desativado com sucesso!',
+      message,
     });
   } catch (error) {
     next(error);
@@ -123,5 +130,5 @@ module.exports = {
   listByText,
   listById,
   create,
-  deactivate,
+  changeStatus,
 };

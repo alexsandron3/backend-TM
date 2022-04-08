@@ -1,10 +1,10 @@
 const prisma = require('../../utils/prismaClient');
 
-module.exports = async (customer) => {
+module.exports = async (id, status) => {
   return await prisma.cliente.update({
-    where: { id: customer.id },
+    where: { idCliente: id },
     data: {
-      statusCliente: false,
+      statusCliente: status,
     },
   });
 };
