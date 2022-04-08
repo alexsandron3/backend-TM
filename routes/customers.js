@@ -15,5 +15,8 @@ router.get('/', customers.listAll);
 // Criar cliente
 router.post('/', validateCustomer, customers.create);
 
+// Desativar cliente
+router.put('/deactivate/:id', customers.deactivate);
+
 // Exportar rotas
 module.exports = router;

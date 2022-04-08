@@ -105,9 +105,23 @@ async function create(req, res, next) {
   }
 }
 
+async function deactivate(req, res, next) {
+  const { id } = req.params;
+  try {
+    const customers = await customer.deactivate(id);
+    return res.status(StatusCodes.OK).json({
+      customers,
+      success: 1,
+      message: 'Cliente desativado com sucesso!',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   listAll,
   listByText,
   listById,
   create,
+  deactivate,
 };
