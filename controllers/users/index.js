@@ -37,9 +37,7 @@ async function login(req, res, next) {
         .json({ message: 'Login realizado com sucesso', token, success: 1 });
     });
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: 'Erro interno', error: err.message });
+    next(err);
   }
 }
 
