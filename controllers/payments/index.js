@@ -78,6 +78,7 @@ async function listPaymentsByDate(req, res) {
     message: 'Pesquisa realizada com sucesso!',
   });
 }
+
 module.exports = {
   listAll,
   listById,

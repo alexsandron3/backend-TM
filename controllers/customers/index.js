@@ -113,7 +113,6 @@ async function changeStatus(req, res, next) {
       Number(id),
       JSON.parse(status),
     );
-    console.log(status);
     const message = JSON.parse(status)
       ? 'Cliente ativado com sucesso!'
       : 'Cliente desativado com sucesso!';

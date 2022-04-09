@@ -6,13 +6,15 @@ const router = express.Router();
 router.get('/start-end-date', events.listByStartEndDate);
 
 //Listar eventos por texto
-router.get('/text/:wordToSearch', events.listByText); 
+router.get('/text/:wordToSearch', events.listByText);
+
+// Alterar o status de um evento
+router.put('/status/:id', events.changeStatus);
 
 // Listar um evento  específico
 router.get('/id/:id', events.listById);
 
 // Listar todos eventos
 router.get('/', events.listAll);
-
 
 module.exports = router;

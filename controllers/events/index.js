@@ -44,9 +44,24 @@ async function listByText(req, res) {
   });
 }
 
+async function changeStatus(req, res) {
+  const { id } = req.params;
+  const { status } = req.query;
+  const events = await event.changeStatus(Number(id), JSON.parse(status));
+  const message = JSON.parse(status)
+    ? 'Evento ativado com sucesso!'
+    : 'Evento desativado com sucesso!';
+  return res.status(StatusCodes.OK).json({
+    events,
+    success: 1,
+    message,
+  });
+}
+
 module.exports = {
   listAll,
   listById,
   listByStartEndDate,
   listByText,
+  changeStatus,
 };

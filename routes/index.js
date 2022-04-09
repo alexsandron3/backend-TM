@@ -4,9 +4,9 @@ const payments = require('./payments');
 const users = require('./users');
 const reports = require('./reports');
 module.exports = {
-  events,
   customers,
   payments,
+  events,
   users,
   reports,
 };
