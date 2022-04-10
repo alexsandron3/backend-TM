@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 
-const { payment } = require('../../models/');
+const { payment, customer } = require('../../models/');
 
 const moment = require('moment');
 async function listPendingPayments(req, res, next) {
@@ -185,21 +185,30 @@ async function financialReport(req, res, next) {
     );
     const outGoing = await payment.totalOutGoing(startDate, endDate);
     const averageSold = await payment.averageSold(startDate, endDate);
-
+    const payments = await payment.listByEventStartEndDateAndStatus(
+      startDate,
+      endDate,
+    );
+    const newCustomers = await customer.newCustomers(startDate, endDate);
     return res.status(StatusCodes.OK).json({
       reports: {
-        ...financialPayment[0],
-        ...outGoing[0],
-        ...averageSold[0],
+        payments,
+        values: {
+          ...financialPayment[0],
+          ...outGoing[0],
+          ...averageSold[0],
+          lucroReal:
+            financialPayment[0].recebimentos - outGoing[0].totalDespesas,
+          lucroEstimado:
+            financialPayment[0].pendente +
+            financialPayment[0].recebimentos -
+            outGoing[0].totalDespesas,
+          novosClientes: newCustomers.length,
+        },
       },
       success: 1,
       message: 'Pesquisa realizada com sucesso!',
     });
-
-    // const totalPending = await payment.totalPending(startDate, endDate);
-    // const totalOutgoing = await payment.totalOutgoing(startDate, endDate);
-    // const quantityOfCustomers = await payment.quantityOfCustomers(startDate, endDate);
-    // const
   } catch (error) {
     console.log(error);
     next(error);
