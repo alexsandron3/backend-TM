@@ -16,6 +16,7 @@ module.exports = async (idPasseio) => {
               rgCliente: true,
               referencia: true,
               telefoneCliente: true,
+              dataNascimento: true,
             },
           },
         },
