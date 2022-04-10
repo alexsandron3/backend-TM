@@ -77,10 +77,28 @@ async function changeStatus(req, res, next) {
   }
 }
 
+async function deleteEvent(req, res, next) {
+  const { id } = req.params;
+  try {
+    await event.deleteEvent(Number(id));
+    return res.status(StatusCodes.OK).json({
+      success: 1,
+      message: 'Evento excluído com sucesso!',
+    });
+  } catch (error) {
+    return res.status(StatusCodes.OK).json({
+      success: 0,
+      message:
+        'Não foi possível deletar o evento, verifique se existem pagamentos neste evento ou entre em contato com o suporte!',
+    });
+  }
+}
+
 module.exports = {
   listAll,
   listById,
   listByStartEndDate,
   listByText,
   changeStatus,
+  deleteEvent,
 };

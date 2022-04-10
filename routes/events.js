@@ -14,6 +14,9 @@ router.put('/status/:id', events.changeStatus);
 // Listar um evento  específico
 router.get('/id/:id', events.listById);
 
+// Deletar um evento específico
+router.delete('/id/:id', events.deleteEvent);
+
 // Listar todos eventos
 router.get('/', events.listAll);
 

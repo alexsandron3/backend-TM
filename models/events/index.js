@@ -3,6 +3,7 @@ const listById = require('./listById');
 const listByStartEndDate = require('./listByStartEndDate');
 const listByText = require('./listByText');
 const changeStatus = require('./changeStatus');
+const deleteEvent = require('./delete');
 
 module.exports = {
   listAll,
@@ -10,4 +11,5 @@ module.exports = {
   listByStartEndDate,
   listByText,
   changeStatus,
+  deleteEvent,
 };

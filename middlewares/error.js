@@ -4,14 +4,16 @@ const { StatusCodes } = require('http-status-codes');
 module.exports = (err, req, res, next) => {
   console.log('first');
   if (err.statusCode) {
-    return res.status(err.statusCode).json({ message: err.message });
+    return res.status(err.statusCode).json({ success: 0, message: err.message });
   }
 
   if (err.details) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ success: 0, message: err.message });
   }
 
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .json({ message: `Internal server error: ${err}` });
+    .json({ success: 0, essage: `Internal server error: ${err}` });
 };
