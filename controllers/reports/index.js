@@ -184,11 +184,13 @@ async function financialReport(req, res, next) {
       endDate,
     );
     const outGoing = await payment.totalOutGoing(startDate, endDate);
+    const averageSold = await payment.averageSold(startDate, endDate);
 
     return res.status(StatusCodes.OK).json({
       reports: {
         ...financialPayment[0],
         ...outGoing[0],
+        ...averageSold[0],
       },
       success: 1,
       message: 'Pesquisa realizada com sucesso!',
