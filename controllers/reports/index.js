@@ -179,9 +179,17 @@ async function listPaymentsGroupedByEventAndDate(req, res, next) {
 async function financialReport(req, res, next) {
   const { startDate, endDate } = req.query;
   try {
-    const allPayments = await payment.financialPayments(startDate, endDate);
+    const financialPayment = await payment.financialPayments(
+      startDate,
+      endDate,
+    );
+    const outGoing = await payment.totalOutGoing(startDate, endDate);
+
     return res.status(StatusCodes.OK).json({
-      payments: allPayments,
+      reports: {
+        ...financialPayment[0],
+        ...outGoing[0],
+      },
       success: 1,
       message: 'Pesquisa realizada com sucesso!',
     });
