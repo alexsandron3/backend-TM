@@ -11,6 +11,7 @@ const listPaymentsNotPending = require('./listPaymentsNotPending');
 const listPaymentsByDate = require('./listPaymentsByDate');
 const listTopSellersByDate = require('./listTopSellersByDate');
 const listPaymentsGroupedByEventAndDate = require('./listPaymentsGroupedByEventAndDate');
+const financialPayments = require('./financialPayments');
 module.exports = {
   listAll,
   listById,
@@ -25,4 +26,5 @@ module.exports = {
   listPaymentsByDate,
   listTopSellersByDate,
   listPaymentsGroupedByEventAndDate,
+  financialPayments,
 };

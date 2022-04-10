@@ -13,4 +13,6 @@ router.get(
   reports.listPaymentsGroupedByEventAndDate,
 );
 
+// Relatório finaceiro por intervalo de data
+router.get('/financial', reports.financialReport);
 module.exports = router;

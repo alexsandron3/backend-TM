@@ -176,6 +176,26 @@ async function listPaymentsGroupedByEventAndDate(req, res, next) {
   }
 }
 
+async function financialReport(req, res, next) {
+  const { startDate, endDate } = req.query;
+  try {
+    const allPayments = await payment.financialPayments(startDate, endDate);
+    return res.status(StatusCodes.OK).json({
+      payments: allPayments,
+      success: 1,
+      message: 'Pesquisa realizada com sucesso!',
+    });
+
+    // const totalPending = await payment.totalPending(startDate, endDate);
+    // const totalOutgoing = await payment.totalOutgoing(startDate, endDate);
+    // const quantityOfCustomers = await payment.quantityOfCustomers(startDate, endDate);
+    // const
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+}
+
 module.exports = {
   listPendingPayments,
   listTopPendingCustomers,
@@ -185,4 +205,5 @@ module.exports = {
   listPaymentsByDate,
   listTopSellersByDate,
   listPaymentsGroupedByEventAndDate,
+  financialReport,
 };
