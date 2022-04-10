@@ -6,6 +6,12 @@ const {
   CLIENTE_CRIANÇA,
 } = require('./constants');
 
+/**
+ * 
+ * @param {*} payments 
+ * @returns 
+ */
+
 module.exports = (payments) => {
   const paymentStatus = {
     interessado: 0,

@@ -64,12 +64,11 @@ async function changeStatus(req, res, next) {
   const { id } = req.params;
   const { status } = req.query;
   try {
-    const events = await event.changeStatus(Number(id), JSON.parse(status));
+    await event.changeStatus(Number(id), JSON.parse(status));
     const message = JSON.parse(status)
       ? 'Evento ativado com sucesso!'
       : 'Evento desativado com sucesso!';
     return res.status(StatusCodes.OK).json({
-      events,
       success: 1,
       message,
     });

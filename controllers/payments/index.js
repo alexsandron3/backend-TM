@@ -79,8 +79,16 @@ async function listByEventId(req, res, next) {
   const { idPasseio } = req.params;
   try {
     const payments = await payment.listByEventId(idPasseio);
+    const paymentsTotalStatus = countPaymentStatus(payments.pagamento_passeio);
+    const paymentsWithStatus = {
+      passeio: payments,
+      paymentsTotalStatus,
+    };
+
     return res.status(StatusCodes.OK).json({
-      payments,
+      payments: {
+        ...paymentsWithStatus,
+      },
       success: 1,
       message: 'Pesquisa realizada com sucesso!',
     });
