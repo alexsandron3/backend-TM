@@ -2,9 +2,11 @@ const { StatusCodes } = require('http-status-codes');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (err, req, res, next) => {
-  console.log('first');
+  console.log(err);
   if (err.statusCode) {
-    return res.status(err.statusCode).json({ success: 0, message: err.message });
+    return res
+      .status(err.statusCode)
+      .json({ success: 0, message: err.message });
   }
 
   if (err.details) {

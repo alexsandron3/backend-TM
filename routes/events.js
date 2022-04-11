@@ -5,6 +5,9 @@ const router = express.Router();
 // Listar eventos por data de inicio e fim
 router.get('/start-end-date', events.listByStartEndDate);
 
+// Listar eventos por data
+router.get('/date/:date', events.listByDate);
+
 //Listar eventos por texto
 router.get('/text/:wordToSearch', events.listByText);
 

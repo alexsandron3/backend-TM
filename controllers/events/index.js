@@ -94,6 +94,23 @@ async function deleteEvent(req, res, next) {
   }
 }
 
+async function listByDate(req, res, next) {
+  const { date } = req.params;
+  const { ocultarEncerrados } = req.query;
+  try {
+    const events = await event.listByDate(
+      new Intl.DateTimeFormat('pt-BR').format(new Date(date)),
+      ocultarEncerrados,
+    );
+    return res.status(StatusCodes.OK).json({
+      events,
+      success: 1,
+      message: 'Pesquisa realizada com sucesso!',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   listAll,
   listById,
@@ -101,4 +118,5 @@ module.exports = {
   listByText,
   changeStatus,
   deleteEvent,
+  listByDate,
 };
