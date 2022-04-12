@@ -7,27 +7,37 @@ module.exports = async (text, ocultarInativos) => {
           nomeCliente: {
             contains: text,
           },
-          statusCliente: ocultarInativos === 'true',
+          // statusCliente: ocultarInativos === 'true',
         },
         {
           cpfCliente: {
             contains: text,
           },
-          statusCliente: ocultarInativos === 'true',
+          // statusCliente: ocultarInativos === 'true',
         },
         {
           telefoneCliente: {
             contains: text,
           },
-          statusCliente: ocultarInativos === 'true',
+          // statusCliente: ocultarInativos === 'true',
         },
         {
           referencia: {
             contains: text,
           },
-          statusCliente: ocultarInativos === 'true',
+          // statusCliente: ocultarInativos === 'true',
         },
       ],
+      AND:
+        ocultarInativos === 'true'
+          ? [
+              {
+                statusCliente: {
+                  not: false,
+                },
+              },
+            ]
+          : [],
     },
   });
 };
