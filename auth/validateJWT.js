@@ -1,8 +1,7 @@
-
 const { StatusCodes } = require('http-status-codes');
 
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = process.env.JWT_SECRET;
+const { SECRET } = process.env;
 const prisma = require('../utils/prismaClient');
 
 module.exports = async (req, res, next) => {
@@ -14,7 +13,7 @@ module.exports = async (req, res, next) => {
     });
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, SECRET);
     const user = await prisma.users.findUnique({
       where: {
         username: decoded.username,

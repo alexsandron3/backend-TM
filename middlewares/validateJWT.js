@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const { StatusCodes } = require('http-status-codes');
 
 const prisma = require('../utils/prismaClient');
+const { SECRET } = process.env;
 
-async function login(req, res, next) {
+module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -13,7 +13,7 @@ async function login(req, res, next) {
     });
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, SECRET);
     const user = await prisma.users.findUnique({
       where: {
         username: decoded.username,
@@ -30,6 +30,4 @@ async function login(req, res, next) {
   } catch (error) {
     next(error);
   }
-}
-
-module.exports = login;
+};
