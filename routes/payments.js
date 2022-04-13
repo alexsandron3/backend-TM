@@ -19,6 +19,6 @@ router.get('/id/:id', payments.listById);
 
 router.get('/', payments.listAll);
 
-router.post('/', validatePayment, () => console.log('opa'));
+router.post('/', validatePayment, payments.create);
 
 module.exports = router;

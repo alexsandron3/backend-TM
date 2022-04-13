@@ -73,7 +73,7 @@ module.exports = async (req, res, next) => {
     const newPaymentData = {
       idCliente,
       idPasseio,
-      createdBy, // XXX: not used yet
+      createdBy: req.user.username,
       valorPago,
       valorVendido,
       previsaoPagamento,
@@ -88,7 +88,7 @@ module.exports = async (req, res, next) => {
       localEmbarque,
       dataPagamento,
       dataPagamentoEfetuado:
-        paymentStatus !== CLIENTE_INTERESSADO
+        statusPayment !== CLIENTE_INTERESSADO
           ? new Intl.DateTimeFormat('pt-BR').format(new Date())
           : null,
       clienteDesistente,
@@ -97,7 +97,7 @@ module.exports = async (req, res, next) => {
       numeroVagas,
       opcionais,
     };
-    console.log(statusPayment);
+    req.paymentData = newPaymentData;
     return next();
   } catch (error) {
     next(error);
