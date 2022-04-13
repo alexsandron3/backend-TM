@@ -1,4 +1,3 @@
-const { payment } = require('../models/');
 const {
   CLIENTE_INTERESSADO,
   PAGAMENTO_QUITADO,

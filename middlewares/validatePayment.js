@@ -1,7 +1,7 @@
 const { payment, event } = require('../models/');
 const paymentSchema = require('../schemas/payments');
 const calculatePaymentStatus = require('../utils/calculatePaymentStatus');
-const { PROBLEM_CODE } = require('../utils/constants');
+const { PROBLEM_CODE, CLIENTE_INTERESSADO } = require('../utils/constants');
 const countPaymentStatus = require('../utils/countPaymentStatus');
 const prisma = require('../utils/prismaClient');
 
@@ -18,10 +18,8 @@ module.exports = async (req, res, next) => {
     transporte,
     anotacoes,
     historicoPagamento,
-    valorSeguroViagemCliente,
     taxaPagamento,
     localEmbarque,
-    dataPagamento,
     clienteDesistente,
     ordemPoltrona,
     valorContrato,
@@ -29,6 +27,7 @@ module.exports = async (req, res, next) => {
     opcionais,
     idadeCliente,
   } = req.body;
+  let dataPagamento = null;
   try {
     await paymentSchema.validateAsync(req.body);
     const paymentExists = await payment.listByCustomerIdAndEventId(
@@ -71,6 +70,33 @@ module.exports = async (req, res, next) => {
         message: 'Erro interno ao calcular status do pagamento!',
       });
     }
+    const newPaymentData = {
+      idCliente,
+      idPasseio,
+      createdBy, // XXX: not used yet
+      valorPago,
+      valorVendido,
+      previsaoPagamento,
+      valorPendente,
+      statusPagamento: statusPayment,
+      clienteParceiro,
+      transporte,
+      anotacoes,
+      historicoPagamento,
+      valorSeguroViagemCliente: seguroViagem,
+      taxaPagamento,
+      localEmbarque,
+      dataPagamento,
+      dataPagamentoEfetuado:
+        paymentStatus !== CLIENTE_INTERESSADO
+          ? new Intl.DateTimeFormat('pt-BR').format(new Date())
+          : null,
+      clienteDesistente,
+      ordemPoltrona,
+      valorContrato,
+      numeroVagas,
+      opcionais,
+    };
     console.log(statusPayment);
     return next();
   } catch (error) {
