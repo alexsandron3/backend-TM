@@ -13,10 +13,12 @@ module.exports = async (req, res, next) => {
     });
   }
   try {
-    const decoded = jwt.verify(token, SECRET);
-    const user = await prisma.users.findUnique({
+    const { data } = jwt.verify(token, SECRET);
+    const user = await prisma.users.findFirst({
       where: {
-        username: decoded.username,
+        username: {
+          equals: data.username,
+        },
       },
     });
     if (!user) {
@@ -25,7 +27,12 @@ module.exports = async (req, res, next) => {
         success: 0,
       });
     }
-    req.user = user;
+    req.user = {
+      id: user.id,
+      username: user.username,
+      nivelAcesso: user.nivelAcesso,
+      createdAt: user.created_at,
+    };
     next();
   } catch (error) {
     next(error);
