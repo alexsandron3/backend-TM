@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { payments } = require('../controllers');
+const validatePayment = require('../middlewares/validatePayment');
 
 router.get(
   '/cliente/:idCliente/passeio/:idPasseio',
@@ -17,5 +18,7 @@ router.get('/start-end-date', payments.listPaymentsByDate);
 router.get('/id/:id', payments.listById);
 
 router.get('/', payments.listAll);
+
+router.post('/', validatePayment, () => console.log('opa'));
 
 module.exports = router;
