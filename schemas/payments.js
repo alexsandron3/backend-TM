@@ -5,7 +5,7 @@ const paymentSchema = Joi.object({
   idPasseio: Joi.number().required(),
   valorPago: Joi.number().required().default(0),
   valorVendido: Joi.number().required().default(0),
-  previsaoPagamento: [Joi.string(), Joi.allow(null)],
+  previsaoPagamento: [Joi.string().empty('').default(null), Joi.allow(null)],
   valorPendente: Joi.number().required().default(0),
   clienteParceiro: Joi.boolean().falsy(0).truthy(1).required().default(false),
   transporte: [Joi.string(), Joi.allow(null)],

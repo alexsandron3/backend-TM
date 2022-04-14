@@ -6,30 +6,31 @@ const countPaymentStatus = require('../utils/countPaymentStatus');
 const prisma = require('../utils/prismaClient');
 
 module.exports = async (req, res, next) => {
-  const {
-    idPasseio,
-    idCliente,
-    valorPago,
-    valorVendido,
-    previsaoPagamento,
-    valorPendente,
-    seguroViagem,
-    clienteParceiro,
-    transporte,
-    anotacoes,
-    historicoPagamento,
-    taxaPagamento,
-    localEmbarque,
-    clienteDesistente,
-    ordemPoltrona,
-    valorContrato,
-    numeroVagas,
-    opcionais,
-    idadeCliente,
-  } = req.body;
   let dataPagamento = null;
   try {
-    await paymentSchema.validateAsync(req.body);
+    const validateBody = await paymentSchema.validateAsync(req.body);
+    const {
+      idPasseio,
+      idCliente,
+      valorPago,
+      valorVendido,
+      previsaoPagamento,
+      valorPendente,
+      seguroViagem,
+      clienteParceiro,
+      transporte,
+      anotacoes,
+      historicoPagamento,
+      taxaPagamento,
+      localEmbarque,
+      clienteDesistente,
+      ordemPoltrona,
+      valorContrato,
+      numeroVagas,
+      opcionais,
+      idadeCliente,
+      valorSeguroViagemCliente,
+    } = validateBody;
     const paymentExists = await payment.listByCustomerIdAndEventId(
       Number(idCliente),
       Number(idPasseio),
@@ -49,7 +50,6 @@ module.exports = async (req, res, next) => {
     const paymentEvent = (await event.listById(idPasseio))[0];
     const totalSlots = paymentEvent.lotacao;
     const idadeIsencao = paymentEvent.idadeIsencao;
-    console.log(idadeCliente, idadeIsencao);
     const leftSlots = totalSlots - ocupiedSlots;
     if (leftSlots <= 0) {
       return res.status(400).json({
@@ -71,9 +71,9 @@ module.exports = async (req, res, next) => {
       });
     }
     const newPaymentData = {
-      idCliente,
-      idPasseio,
-      createdBy: req.user.username,
+      idCliente: idCliente,
+      idPasseio: idPasseio,
+      createdBy: req.user.id,
       valorPago,
       valorVendido,
       previsaoPagamento,
@@ -83,14 +83,13 @@ module.exports = async (req, res, next) => {
       transporte,
       anotacoes,
       historicoPagamento,
-      valorSeguroViagemCliente: seguroViagem,
+      valorSeguroViagemCliente,
+      seguroViagem,
       taxaPagamento,
       localEmbarque,
       dataPagamento,
       dataPagamentoEfetuado:
-        statusPayment !== CLIENTE_INTERESSADO
-          ? new Intl.DateTimeFormat('pt-BR').format(new Date())
-          : null,
+        statusPayment !== CLIENTE_INTERESSADO ? new Date() : null,
       clienteDesistente,
       ordemPoltrona,
       valorContrato,

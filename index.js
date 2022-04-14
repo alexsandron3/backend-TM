@@ -8,7 +8,7 @@ const { validateJWT } = require('./middlewares');
 app.use(express.json());
 app.use(cors());
 app.use('/events', routes.events);
-app.use('/customers', routes.customers);
+app.use('/customers', validateJWT, routes.customers);
 app.use('/payments', validateJWT, routes.payments);
 app.use('/users', routes.users);
 app.use('/reports', routes.reports);
