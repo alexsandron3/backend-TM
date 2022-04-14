@@ -15,6 +15,7 @@ const financialPayments = require('./financialPayments');
 const totalOutGoing = require('./totalOutGoing');
 const averageSold = require('./averageSold');
 const listByEventStartEndDateAndStatus = require('./listByEventStartEndDateAndStatus');
+const create = require('./create');
 module.exports = {
   listAll,
   listById,
@@ -33,4 +34,5 @@ module.exports = {
   totalOutGoing,
   averageSold,
   listByEventStartEndDateAndStatus,
+  create,
 };

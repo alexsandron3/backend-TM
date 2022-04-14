@@ -111,6 +111,20 @@ async function listByDate(req, res, next) {
     next(error);
   }
 }
+
+async function create(req, res, next) {
+  const { paymentData } = req;
+  try {
+    // const eventData = await event.create(paymentData);
+    return res.status(StatusCodes.OK).json({
+      eventData,
+      success: 1,
+      message: 'Evento criado com sucesso!',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   listAll,
   listById,
@@ -119,4 +133,5 @@ module.exports = {
   changeStatus,
   deleteEvent,
   listByDate,
+  create,
 };

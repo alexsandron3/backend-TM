@@ -111,6 +111,19 @@ async function listPaymentsByDate(req, res, next) {
   }
 }
 
+async function create(req, res, next) {
+  const { paymentData } = req;
+  try {
+    const createdPayment = await payment.create(paymentData);
+    return res.status(StatusCodes.OK).json({
+      id: createdPayment.idPagamento,
+      success: 1,
+      message: 'Pagamento realizado com sucesso',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   listAll,
   listById,
@@ -118,4 +131,5 @@ module.exports = {
   listByEventStartEndDate,
   listByEventId,
   listPaymentsByDate,
+  create,
 };
