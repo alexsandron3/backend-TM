@@ -20,5 +20,6 @@ router.get('/id/:id', payments.listById);
 router.get('/', payments.listAll);
 
 router.post('/', validatePayment, payments.create);
+router.put('/', validatePayment, payments.create);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const paymentSchema = Joi.object({
+const newPaymentSchema = Joi.object({
   idCliente: Joi.number().required(),
   idPasseio: Joi.number().required(),
   valorPago: Joi.number().required().default(0),
@@ -23,4 +23,4 @@ const paymentSchema = Joi.object({
   opcionais: Joi.string(),
   idadeCliente: Joi.number().required(),
 });
-module.exports = paymentSchema;
+module.exports = { newPaymentSchema };

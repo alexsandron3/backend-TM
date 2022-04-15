@@ -1,5 +1,5 @@
 const { payment, event } = require('../models/');
-const paymentSchema = require('../schemas/payments');
+const { newPaymentSchema } = require('../schemas/payments');
 const calculatePaymentStatus = require('../utils/calculatePaymentStatus');
 const { PROBLEM_CODE, CLIENTE_INTERESSADO } = require('../utils/constants');
 const countPaymentStatus = require('../utils/countPaymentStatus');
@@ -8,7 +8,7 @@ const prisma = require('../utils/prismaClient');
 module.exports = async (req, res, next) => {
   let dataPagamento = null;
   try {
-    const validateBody = await paymentSchema.validateAsync(req.body);
+    const validateBody = await newPaymentSchema.validateAsync(req.body);
     const {
       idPasseio,
       idCliente,
