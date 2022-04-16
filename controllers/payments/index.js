@@ -124,6 +124,23 @@ async function create(req, res, next) {
     next(error);
   }
 }
+
+async function edit(req, res, next) {
+  const {
+    editPaymentData: { editPaymentData, paymentId },
+  } = req;
+  console.log(req.editPaymentData);
+  try {
+    const editedPayment = await payment.edit(editPaymentData, paymentId);
+    return res.status(StatusCodes.OK).json({
+      payment: editedPayment,
+      success: 1,
+      message: 'Pagamento editado com sucesso',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   listAll,
   listById,
@@ -132,4 +149,5 @@ module.exports = {
   listByEventId,
   listPaymentsByDate,
   create,
+  edit,
 };

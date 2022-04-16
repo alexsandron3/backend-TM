@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { payments } = require('../controllers');
-const validatePayment = require('../middlewares/validatePayment');
+const { validatePayment, validateEditPayment } = require('../middlewares');
 
 router.get(
   '/cliente/:idCliente/passeio/:idPasseio',
@@ -20,6 +20,6 @@ router.get('/id/:id', payments.listById);
 router.get('/', payments.listAll);
 
 router.post('/', validatePayment, payments.create);
-router.put('/', validatePayment, payments.create);
+router.put('/', validateEditPayment, payments.edit);
 
 module.exports = router;

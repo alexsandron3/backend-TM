@@ -4,6 +4,7 @@ const validateJWT = require('./validateJWT');
 const validateLogin = require('./validateLogin');
 const validateNewUser = require('./validateNewUser');
 const validatePayment = require('./validatePayment');
+const validateEditPayment = require('./validateEditPayment');
 
 module.exports = {
   error,
@@ -12,4 +13,5 @@ module.exports = {
   validateNewUser,
   validatePayment,
   validateJWT,
+  validateEditPayment,
 };
