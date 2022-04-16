@@ -1,14 +1,15 @@
+const { messages } = require('joi-translation-pt-br');
 const { payment, event } = require('../models/');
 const { editPaymentSchema } = require('../schemas/payments');
 const calculatePaymentStatus = require('../utils/calculatePaymentStatus');
 const { PROBLEM_CODE, CLIENTE_INTERESSADO } = require('../utils/constants');
-const countPaymentStatus = require('../utils/countPaymentStatus');
-const prisma = require('../utils/prismaClient');
 
 module.exports = async (req, res, next) => {
   let dataPagamento = null;
   try {
-    const validateBody = await editPaymentSchema.validateAsync(req.body);
+    const validateBody = await editPaymentSchema.validateAsync(req.body, {
+      messages,
+    });
     const {
       idPagamento,
       valorPago,
@@ -70,7 +71,10 @@ module.exports = async (req, res, next) => {
       localEmbarque,
       dataPagamento,
       dataPagamentoEfetuado:
-        statusPayment !== CLIENTE_INTERESSADO ? new Date() : null,
+        statusPayment !== CLIENTE_INTERESSADO &&
+        paymentExists.dataPagamentoEfetuado === null
+          ? new Date()
+          : null,
       clienteDesistente,
       ordemPoltrona,
       valorContrato,
