@@ -46,7 +46,7 @@ module.exports = async (req, res, next) => {
     const { quitado, confirmado, parceiro, crianca } =
       countPaymentStatus(pagamento_passeio);
 
-    const ocupiedSlots = quitado + confirmado + parceiro + crianca;
+    const ocupiedSlots = quitado + confirmado + crianca;
     const paymentEvent = (await event.listById(idPasseio))[0];
     const totalSlots = paymentEvent.lotacao;
     const idadeIsencao = paymentEvent.idadeIsencao;
