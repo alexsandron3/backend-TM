@@ -110,6 +110,19 @@ async function listPaymentsByDate(req, res, next) {
     next(error);
   }
 }
+async function listByCustomerId(req, res, next) {
+  const { customerId } = req.params;
+  try {
+    const payments = await payment.listByCustomerId(Number(customerId));
+    return res.status(StatusCodes.OK).json({
+      payments,
+      success: 1,
+      message: 'Pesquisa realizada com sucesso!',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 async function create(req, res, next) {
   const { paymentData } = req;
@@ -148,6 +161,7 @@ module.exports = {
   listByEventStartEndDate,
   listByEventId,
   listPaymentsByDate,
+  listByCustomerId,
   create,
   edit,
 };
