@@ -113,7 +113,7 @@ async function listPaymentsByDate(req, res, next) {
 async function listByCustomerId(req, res, next) {
   const { customerId } = req.params;
   try {
-    const payments = await payment.listByCustomerId(Number(customerId));
+    const payments = await payment.listByCustomerId(parseInt(customerId));
     return res.status(StatusCodes.OK).json({
       payments,
       success: 1,

@@ -16,6 +16,7 @@ const totalOutGoing = require('./totalOutGoing');
 const averageSold = require('./averageSold');
 const listByEventStartEndDateAndStatus = require('./listByEventStartEndDateAndStatus');
 const listByCustomerId = require('./listByCustomerId');
+const listCustomerFavorites = require('./listCustomerFavorites');
 const create = require('./create');
 const edit = require('./edit');
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
   averageSold,
   listByEventStartEndDateAndStatus,
   listByCustomerId,
+  listCustomerFavorites,
   create,
   edit,
 };

@@ -176,6 +176,22 @@ async function listPaymentsGroupedByEventAndDate(req, res, next) {
   }
 }
 
+async function listCustomerFavorites(req, res, next) {
+  const { customerId } = req.params;
+  try {
+    const allPayments = await payment.listCustomerFavorites(
+      parseInt(customerId),
+    );
+    return res.status(StatusCodes.OK).json({
+      payments: allPayments,
+      success: 1,
+      message: 'Pesquisa realizada com sucesso!',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function financialReport(req, res, next) {
   const { startDate, endDate } = req.query;
   try {
@@ -225,4 +241,5 @@ module.exports = {
   listTopSellersByDate,
   listPaymentsGroupedByEventAndDate,
   financialReport,
+  listCustomerFavorites,
 };

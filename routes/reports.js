@@ -12,6 +12,7 @@ router.get(
   '/grouped/events/start-end-date',
   reports.listPaymentsGroupedByEventAndDate,
 );
+router.get('/customer/favorites/:customerId', reports.listCustomerFavorites);
 
 // Relatório finaceiro por intervalo de data
 router.get('/financial', reports.financialReport);
