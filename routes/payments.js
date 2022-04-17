@@ -7,6 +7,7 @@ router.get(
   '/cliente/:idCliente/passeio/:idPasseio',
   payments.listByCustomerIdAndEventId,
 );
+router.get('/customer/:customerId', payments.listByCustomerId);
 router.get('/events/', payments.listByEventStartEndDate);
 
 router.get('/passeio/:idPasseio', payments.listByEventId);
