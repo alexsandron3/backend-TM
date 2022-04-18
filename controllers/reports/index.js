@@ -179,9 +179,12 @@ async function listPaymentsGroupedByEventAndDate(req, res, next) {
 async function listCustomerFavorites(req, res, next) {
   const { customerId } = req.params;
   try {
-    const allPayments = await payment.listCustomerFavorites(
+    const favoriteEvents = await payment.listCustomerFavorites(
       parseInt(customerId),
     );
+    const labels = favoriteEvents.map(({ nomePasseio }) => nomePasseio);
+    // const series = allPayments.map(({ quantidade }) => Number(quantidade));
+    console.log(labels);
     return res.status(StatusCodes.OK).json({
       payments: allPayments,
       success: 1,

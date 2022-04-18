@@ -5,11 +5,10 @@ module.exports = async (customerId) => {
     where: {
       idCliente: customerId,
     },
-    include: {
+    select: {
       passeio: {
         select: {
           nomePasseio: true,
-          dataPasseio: true,
         },
       },
     },
