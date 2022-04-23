@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { customers } = require('../controllers');
-const validateCustomer = require('../middlewares/validateCustomer');
+const validateNewCustomer = require('../middlewares/validateNewCustomer');
 
 // Listar clientes por texto
 router.get('/text/:wordToSearch', customers.listByText);
@@ -13,7 +13,10 @@ router.get('/id/:id', customers.listById);
 router.get('/', customers.listAll);
 
 // Criar cliente
-router.post('/', validateCustomer, customers.create);
+router.post('/', validateNewCustomer, customers.create);
+
+// Criar cliente
+router.post('/', validateCustomer, customers.update);
 
 // Desativar cliente
 router.put('/status/:id', customers.changeStatus);
