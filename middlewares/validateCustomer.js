@@ -1,10 +1,13 @@
 const customerSchema = require('../schemas/customer');
 const prisma = require('../utils/prismaClient');
+const { messages } = require('joi-translation-pt-br');
 
 module.exports = async (req, res, next) => {
   const { nomeCliente, cpfCliente } = req.body;
   try {
-    await customerSchema.validateAsync(req.body);
+    const validatedCustomer = await customerSchema.validateAsync(req.body, {
+      messages,
+    });
     const customerExists = await prisma.cliente.findFirst({
       where: {
         cpfCliente,
@@ -17,6 +20,7 @@ module.exports = async (req, res, next) => {
         message: 'Cliente já cadastrado!',
       });
     }
+    req.customerData = validatedCustomer;
     return next();
   } catch (error) {
     next(error);

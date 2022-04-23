@@ -69,7 +69,7 @@ async function create(req, res, next) {
     clienteRedeSocial,
     poltrona,
     statusCpf,
-  } = req.body;
+  } = req.customerData;
   try {
     const customers = await customer.create({
       nomeCliente,
@@ -84,7 +84,10 @@ async function create(req, res, next) {
       pessoaContato,
       telefoneContato,
       cpfConsultado,
-      dataCpfConsultado,
+      dataCpfConsultado:
+        dataCpfConsultado === ''
+          ? null
+          : moment(dataCpfConsultado, 'DD/MM/YYYY').toISOString(),
       redeSocial,
       statusCliente,
       enderecoCliente,
