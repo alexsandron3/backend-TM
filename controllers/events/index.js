@@ -2,6 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 
 const { event } = require('../../models/');
 
+const moment = require('moment');
+
 async function listAll(req, res, next) {
   const { ocultarEncerrados } = req.query;
   try {

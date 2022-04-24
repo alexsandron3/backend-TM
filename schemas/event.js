@@ -4,7 +4,7 @@ const newEventSchema = Joi.object({
   nomePasseio: Joi.string().required(),
   localPasseio: [Joi.string().optional(), Joi.allow(null)],
   valorPasseio: Joi.number().optional().default(0),
-  dataPasseio: [Joi.string().optional(), Joi.allow(null)],
+  dataPasseio: Joi.string().required(),
   lotacao: Joi.number().required().min(5),
   anotacoes: [Joi.string().optional(), Joi.allow(null)],
   idadeIsencao: Joi.number().required(),
