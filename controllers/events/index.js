@@ -144,6 +144,34 @@ async function create(req, res, next) {
     next(error);
   }
 }
+
+async function edit(req, res, next) {
+  const { id } = req.params;
+  const { eventData } = req;
+  const { dataPasseio, dataLancamento, prazoVigencia } = eventData;
+  const eventWithDatesFormated = {
+    ...eventData,
+    dataPasseio:
+      dataPasseio === ''
+        ? null
+        : moment(dataPasseio, 'DD/MM/YYYY').toISOString(),
+    dataLancamento:
+      dataLancamento === ''
+        ? null
+        : moment(dataLancamento, 'DD/MM/YYYY').toISOString(),
+    prazoVigencia:
+      prazoVigencia === ''
+        ? null
+        : moment(prazoVigencia, 'DD/MM/YYYY').toISOString(),
+  };
+
+  const updatedEvent = await event.edit(Number(id), eventWithDatesFormated);
+  return res.status(StatusCodes.OK).json({
+    event: updatedEvent,
+    success: 1,
+    message: 'Evento editado com sucesso!',
+  });
+}
 module.exports = {
   listAll,
   listById,
