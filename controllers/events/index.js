@@ -113,11 +113,28 @@ async function listByDate(req, res, next) {
 }
 
 async function create(req, res, next) {
-  const { paymentData } = req;
+  const { eventData } = req;
+  const { dataPasseio, dataLancamento, prazoVigencia } = eventData;
+  const eventWithDatesFormated = {
+    ...eventData,
+    dataPasseio:
+      dataPasseio === ''
+        ? null
+        : moment(dataPasseio, 'DD/MM/YYYY').toISOString(),
+    dataLancamento:
+      dataLancamento === ''
+        ? null
+        : moment(dataLancamento, 'DD/MM/YYYY').toISOString(),
+    prazoVigencia:
+      prazoVigencia === ''
+        ? null
+        : moment(prazoVigencia, 'DD/MM/YYYY').toISOString(),
+  };
+
   try {
-    // const eventData = await event.create(paymentData);
+    const createdEvent = await event.create(eventWithDatesFormated);
     return res.status(StatusCodes.OK).json({
-      eventData,
+      event: createdEvent,
       success: 1,
       message: 'Evento criado com sucesso!',
     });

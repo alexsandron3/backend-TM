@@ -15,9 +15,6 @@ router.get('/', customers.listAll);
 // Criar cliente
 router.post('/', validateNewCustomer, customers.create);
 
-// Criar cliente
-router.post('/', validateCustomer, customers.update);
-
 // Desativar cliente
 router.put('/status/:id', customers.changeStatus);
 

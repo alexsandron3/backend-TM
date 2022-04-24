@@ -1,17 +1,19 @@
 const error = require('./error');
-const validateCustomer = require('./validateCustomer');
+const validateNewCustomer = require('./validateNewCustomer');
 const validateJWT = require('./validateJWT');
 const validateLogin = require('./validateLogin');
 const validateNewUser = require('./validateNewUser');
 const validatePayment = require('./validatePayment');
 const validateEditPayment = require('./validateEditPayment');
+const validateNewEvent = require('./validateNewEvent');
 
 module.exports = {
   error,
-  validateCustomer,
+  validateNewCustomer,
   validateLogin,
   validateNewUser,
   validatePayment,
   validateJWT,
   validateEditPayment,
+  validateNewEvent,
 };
