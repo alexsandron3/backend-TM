@@ -2,8 +2,6 @@ const { StatusCodes } = require('http-status-codes');
 
 const { event } = require('../../models/');
 
-const moment = require('moment');
-
 async function listAll(req, res, next) {
   const { ocultarEncerrados } = req.query;
   try {
@@ -120,17 +118,11 @@ async function create(req, res, next) {
   const eventWithDatesFormated = {
     ...eventData,
     dataPasseio:
-      dataPasseio === ''
-        ? null
-        : moment(dataPasseio, 'DD/MM/YYYY').toISOString(),
+      dataPasseio === '' ? null : new Date(dataPasseio).toISOString(),
     dataLancamento:
-      dataLancamento === ''
-        ? null
-        : moment(dataLancamento, 'DD/MM/YYYY').toISOString(),
+      dataLancamento === '' ? null : new Date(dataLancamento).toISOString(),
     prazoVigencia:
-      prazoVigencia === ''
-        ? null
-        : moment(prazoVigencia, 'DD/MM/YYYY').toISOString(),
+      prazoVigencia === '' ? null : new Date(prazoVigencia).toISOString(),
   };
 
   try {
@@ -152,17 +144,11 @@ async function edit(req, res, next) {
   const eventWithDatesFormated = {
     ...eventData,
     dataPasseio:
-      dataPasseio === ''
-        ? null
-        : moment(dataPasseio, 'DD/MM/YYYY').toISOString(),
+      dataPasseio === '' ? null : new Date(dataPasseio).toISOString(),
     dataLancamento:
-      dataLancamento === ''
-        ? null
-        : moment(dataLancamento, 'DD/MM/YYYY').toISOString(),
+      dataLancamento === '' ? null : new Date(dataLancamento).toISOString(),
     prazoVigencia:
-      prazoVigencia === ''
-        ? null
-        : moment(prazoVigencia, 'DD/MM/YYYY').toISOString(),
+      prazoVigencia === '' ? null : new Date(prazoVigencia).toISOString(),
   };
 
   const updatedEvent = await event.edit(Number(id), eventWithDatesFormated);

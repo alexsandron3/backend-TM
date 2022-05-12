@@ -6,7 +6,6 @@ const SECRET = process.env.SECRET;
 
 async function login(req, res, next) {
   try {
-    console.log(SECRET);
     const { username, password, rememberMe } = req.body;
     const users = await user.findUserByUsername(username);
     if (!users)

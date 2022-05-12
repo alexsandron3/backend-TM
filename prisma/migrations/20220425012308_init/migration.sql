@@ -139,9 +139,9 @@ CREATE TABLE `passeio` (
     `anotacoes` VARCHAR(200) NULL,
     `idadeIsencao` INTEGER NOT NULL,
     `statusPasseio` BOOLEAN NULL DEFAULT true,
-    `dataLancamento` DATE NOT NULL,
+    `dataLancamento` DATE NULL,
     `itensPacote` TEXT NOT NULL,
-    `prazoVigencia` DATE NOT NULL,
+    `prazoVigencia` DATE NULL,
 
     PRIMARY KEY (`idPasseio`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

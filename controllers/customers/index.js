@@ -2,8 +2,6 @@ const { StatusCodes } = require('http-status-codes');
 
 const { customer } = require('../../models/');
 
-const moment = require('moment');
-
 async function listAll(req, res, next) {
   const { ocultarInativos } = req.query;
   try {
@@ -78,7 +76,7 @@ async function create(req, res, next) {
       orgaoEmissor,
       cpfCliente,
       telefoneCliente,
-      dataNascimento: moment(dataNascimento, 'DD/MM/YYYY').toISOString(),
+      dataNascimento: new Date(dataNascimento).toISOString(),
       idadeCliente,
       referencia,
       pessoaContato,
@@ -87,7 +85,7 @@ async function create(req, res, next) {
       dataCpfConsultado:
         dataCpfConsultado === ''
           ? null
-          : moment(dataCpfConsultado, 'DD/MM/YYYY').toISOString(),
+          : new Date(dataCpfConsultado).toISOString(),
       redeSocial,
       statusCliente,
       enderecoCliente,
@@ -102,6 +100,75 @@ async function create(req, res, next) {
       customers,
       success: 1,
       message: 'Cliente criado com sucesso!',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+async function edit(req, res, next) {
+  const {
+    idCliente,
+    nomeCliente,
+    emailCliente,
+    rgCliente,
+    orgaoEmissor,
+    cpfCliente,
+    telefoneCliente,
+    dataNascimento,
+    idadeCliente,
+    referencia,
+    pessoaContato,
+    telefoneContato,
+    cpfConsultado,
+    dataCpfConsultado,
+    redeSocial,
+    statusCliente,
+    enderecoCliente,
+    nacionalidade,
+    profissao,
+    estadoCivil,
+    clienteRedeSocial,
+    poltrona,
+    statusCpf,
+  } = req.customerData;
+
+  try {
+    const customers = await customer.edit(
+      {
+        nomeCliente,
+        emailCliente,
+        rgCliente,
+        orgaoEmissor,
+        cpfCliente,
+        telefoneCliente,
+        dataNascimento: new Date(dataNascimento).toISOString('en-US', {
+          timeZone: 'America/Sao_Paulo',
+        }),
+        idadeCliente,
+        referencia,
+        pessoaContato,
+        telefoneContato,
+        cpfConsultado,
+        dataCpfConsultado:
+          dataCpfConsultado === ''
+            ? null
+            : new Date(dataCpfConsultado).toISOString(),
+        redeSocial,
+        statusCliente,
+        enderecoCliente,
+        nacionalidade,
+        profissao,
+        estadoCivil,
+        clienteRedeSocial,
+        poltrona,
+        statusCpf,
+      },
+      idCliente,
+    );
+    return res.status(StatusCodes.OK).json({
+      customers,
+      success: 1,
+      message: 'Cliente editado com sucesso!',
     });
   } catch (error) {
     next(error);
@@ -133,4 +200,5 @@ module.exports = {
   listById,
   create,
   changeStatus,
+  edit,
 };
