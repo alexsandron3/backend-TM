@@ -1,0 +1,57 @@
+const Joi = require('joi');
+
+const newCustomerSchema = Joi.object({
+  nomeCliente: Joi.string().required(),
+  emailCliente: [Joi.string().email().optional(), Joi.allow(null)],
+  rgCliente: [Joi.string().optional(), Joi.allow(null)],
+  cpfCliente: [Joi.string().optional().min(14).max(14), Joi.allow(null)],
+  telefoneCliente: [Joi.string().optional().min(10).max(11), Joi.allow(null)],
+  dataNascimento: [Joi.string().optional(), Joi.allow(null)],
+  idadeCliente: [Joi.number().min(1).max(100).optional(), Joi.allow(null)],
+  referencia: [Joi.string().optional(), Joi.allow(null)],
+  pessoaContato: [Joi.string().optional(), Joi.allow(null)],
+  telefoneContato: [Joi.string().optional().min(10).max(11), Joi.allow(null)],
+  cpfConsultado: Joi.boolean().falsy(0).truthy(1).optional().default(false),
+  dataCpfConsultado: [Joi.string().optional(), Joi.allow(null)],
+  redeSocial: [Joi.string().optional(), Joi.allow(null)],
+  statusCliente: Joi.boolean().falsy(0).truthy(1).optional().default(true),
+  enderecoCliente: [Joi.string().optional(), Joi.allow(null)],
+  nacionalidade: [Joi.string().optional(), Joi.allow(null)],
+  profissao: [Joi.string().optional(), Joi.allow(null)],
+  estadoCivil: [Joi.string().optional(), Joi.allow(null)],
+  clienteRedeSocial: Joi.boolean().falsy(0).truthy(1).required().default(false),
+  poltrona: [Joi.string().optional(), Joi.allow(null)],
+  statusCpf: [Joi.string().optional(), Joi.allow(null)],
+  orgaoEmissor: [Joi.string().optional(), Joi.allow(null)],
+});
+
+const updateCustomerSchema = Joi.object({
+  idCliente: Joi.number().required(),
+  nomeCliente: Joi.string().required(),
+  emailCliente: [Joi.string().email().optional(), Joi.allow(null)],
+  rgCliente: [Joi.string().optional(), Joi.allow(null)],
+  orgaoEmissor: [Joi.string().optional(), Joi.allow(null)],
+  cpfCliente: [Joi.string().optional().min(14).max(14), Joi.allow(null)],
+  estadoCivil: [Joi.string().optional(), Joi.allow(null)],
+  dataNascimento: [Joi.string().optional(), Joi.allow(null)],
+  idadeCliente: [Joi.number().min(1).max(100).optional()],
+  telefoneCliente: [Joi.string().optional().min(10).max(11), Joi.allow(null)],
+  profissao: [Joi.string().optional(), Joi.allow(null)],
+  nacionalidade: [Joi.string().optional(), Joi.allow(null)],
+  poltrona: [Joi.string().optional(), Joi.allow(null)],
+  cpfConsultado: Joi.boolean().falsy(0).truthy(1).optional().default(false),
+  dataCpfConsultado: [Joi.string().optional(), Joi.allow(null)],
+  enderecoCliente: [Joi.string().optional(), Joi.allow(null)],
+  referencia: [Joi.string().optional(), Joi.allow(null)],
+  telefoneContato: [Joi.string().optional().min(10).max(11), Joi.allow(null)],
+  pessoaContato: [Joi.string().optional(), Joi.allow(null)],
+  redeSocial: [Joi.string().optional(), Joi.allow(null)],
+  clienteRedeSocial: Joi.boolean().falsy(0).truthy(1).required().default(false),
+  statusCliente: Joi.boolean().falsy(0).truthy(1).optional().default(true),
+  statusCpf: [Joi.string().optional(), Joi.allow(null)],
+});
+
+module.exports = {
+  newCustomerSchema,
+  updateCustomerSchema,
+};
